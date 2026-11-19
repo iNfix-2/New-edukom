@@ -1,9 +1,11 @@
 import os
 from pathlib import Path
 from urllib.parse import urlparse
-import pymysql
-
-pymysql.install_as_MySQLdb()
+try:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+except ImportError:
+    pass
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- .env loader (no external deps) ---
@@ -29,7 +31,7 @@ def _get_bool(name: str, default: bool = False) -> bool:
         return default
     return str(val).strip().lower() in {'1', 'true', 'yes', 'y', 'on'}
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-edukom-hr-production-fallback-key-2026')
 
 DEBUG = _get_bool('DJANGO_DEBUG', True)
 

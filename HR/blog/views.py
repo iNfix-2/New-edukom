@@ -71,13 +71,23 @@ def post_detail(request, slug):
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def post_create(request):
-    return redirect('http://127.0.0.1:8009/blog/create/')
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user.get_full_name() or request.user.username
+            post.save()
+            form.save_m2m()
+            return redirect(post.get_absolute_url())
+    else:
+        form = PostForm()
+    return render(request, 'blog/post_form.html', {'form': form})
 
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def post_manage_list(request):
-    return redirect('http://127.0.0.1:8009/dashboard/')
+    posts = Post.objects.all().order_by('-created_at')
 
     q = (request.GET.get('q') or '').strip()
     status = (request.GET.get('status') or '').strip()

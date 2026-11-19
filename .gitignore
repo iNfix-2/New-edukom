@@ -15,7 +15,8 @@ venv_linux_new/
 venv*/
 .venv*/
 tmp/
-temp/
+/temp/
+!learning/temp/
 
 # IDEs and Editors
 .vscode/
@@ -40,3 +41,8 @@ db.sqlite3
 node_modules/
 dist/
 .next/
+
+# Archives
+*.zip
+*.tar.gz
+

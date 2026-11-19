@@ -5,11 +5,18 @@ from tutors import models as tmodels
 
 @login_required
 def GuardianListView(request):
-    guardian = models.Guardian.objects.all()
-    tutor = tmodels.Tutor.objects.all()
+    order = request.GET.get('order', 'desc')
+    if order == 'asc':
+        guardian = models.Guardian.objects.all().order_by('date_joined')
+        tutor = tmodels.Tutor.objects.all().order_by('date_joined')
+    else:
+        guardian = models.Guardian.objects.all().order_by('-date_joined')
+        tutor = tmodels.Tutor.objects.all().order_by('-date_joined')
+        
     context = {
-        'guardian':guardian,
-        'tutor':tutor
+        'guardian': guardian,
+        'tutor': tutor,
+        'current_order': order
     }
     return render(request, 'Request/list.html', context)
 

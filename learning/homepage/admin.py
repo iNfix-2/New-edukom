@@ -2,7 +2,14 @@ from django.contrib import admin
 from .import models
 
 admin.site.register( models.AboutChild)
-admin.site.register( models.Guardian)
+
+@admin.register(models.Guardian)
+class GuardianAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'email', 'phone', 'date_joined')
+    list_filter = ('date_joined', 'lesson_type')
+    search_fields = ('first_name', 'last_name', 'email', 'phone')
+    ordering = ('-date_joined',)
+
 admin.site.register( models.Location)
 admin.site.register( models.Lesson)
 

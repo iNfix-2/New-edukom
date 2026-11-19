@@ -12,8 +12,8 @@ from django.contrib.auth.decorators import login_required
 
 
 def homepage(request):
-    # Fetch random or latest 5 testimonials to display on the homepage
-    testimonials = models.Testimonial.objects.all().order_by('-date_created')[:5]
+    # Fetch testimonials to display in the slideshow on the homepage
+    testimonials = models.Testimonial.objects.all().order_by('-date_created')[:15]
     
     # Get list of testimonial images for fallback
     import os
@@ -47,7 +47,7 @@ def contact(request):
         if form.is_valid():
             data = form.save()
             subject = f'Message from {data.name}'
-            admin_url = f"https://www.edukom.ng{reverse('admin:homepage_contact_change', args=[data.pk])}"
+            admin_url = f"https://learning.edukom.ng{reverse('admin:homepage_contact_change', args=[data.pk])}"
             html_message = render_to_string('emails/contact.html', {'data': data, 'admin_url': admin_url})
             from_email = settings.EMAIL_HOST_USER
             recipient_list = settings.OFFICIAL_NOTIFICATION_EMAILS

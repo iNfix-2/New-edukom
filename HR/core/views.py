@@ -33,6 +33,13 @@ def learning_redirect(request: HttpRequest) -> HttpResponse:
     return redirect(LEARNING_PLATFORM_URL)
 
 
+def learning_path_redirect(request: HttpRequest, prefix: str = '', subpath: str = '') -> HttpResponse:
+    """Redirect learning paths (such as account/, Tutor/, guardians/) from edukom.ng to learning platform."""
+    base = LEARNING_PLATFORM_URL.rstrip('/')
+    target = f"{base}{request.get_full_path()}"
+    return HttpResponseRedirect(target)
+
+
 def contact(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         return redirect('home')
