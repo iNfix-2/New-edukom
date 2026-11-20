@@ -17,23 +17,32 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$zl@s@t7bm8q-d(-0!!ewm#ap1s&tov%m0k^ai)_osyh0p$phr'
+def _get_bool(name, default=False):
+    return os.environ.get(name, str(default)).lower() in {'1', 'true', 'yes', 'on'}
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = _get_bool('DJANGO_DEBUG', False)
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
+if not SECRET_KEY:
+    if not DEBUG:
+        from django.core.exceptions import ImproperlyConfigured
+        raise ImproperlyConfigured('Set DJANGO_SECRET_KEY before starting in production.')
+    from django.core.management.utils import get_random_secret_key
+    SECRET_KEY = get_random_secret_key()
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get(
+    'DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,[::1]' if DEBUG else ''
+).split(',') if h.strip()]
+if not DEBUG and (not ALLOWED_HOSTS or '*' in ALLOWED_HOSTS):
+    from django.core.exceptions import ImproperlyConfigured
+    raise ImproperlyConfigured('Set explicit DJANGO_ALLOWED_HOSTS for production.')
 
-ALLOWED_HOSTS = ['*']
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://*.trycloudflare.com',
-    'http://127.0.0.1',
-    'http://localhost',
-]
-
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',') if o.strip()]
+SECURE_SSL_REDIRECT = _get_bool('DJANGO_SECURE_SSL_REDIRECT', not DEBUG)
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_SECURE_HSTS_SECONDS', '0' if DEBUG else '31536000'))
+SECURE_HSTS_INCLUDE_SUBDOMAINS = _get_bool('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', False)
+SECURE_HSTS_PRELOAD = _get_bool('DJANGO_SECURE_HSTS_PRELOAD', False)
 
 # Application definition
 
@@ -136,7 +145,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 STATIC_ROOT = os.path.join(BASE_DIR, "public/Assets")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_URL = 'Assets/'
+STATIC_URL = '/Assets/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -144,23 +153,17 @@ STATIC_URL = 'Assets/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/account/Login'
+LOGIN_URL = '/account/Login/'
 LOGOUT_REDIRECT_URL = '/account/Login'
-LOGOUT_URL = '/account/Logout'
+LOGOUT_URL = '/account/Logout/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.edukom.ng'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'support@edukom.ng'
-EMAIL_HOST_PASSWORD = 'Johnokojere12395'
-
-# List of official email addresses that should receive notifications for form submissions
-OFFICIAL_NOTIFICATION_EMAILS = [
-    'ope.komolafe@edukom.ng',
-    'hannahmembis@edukom.ng',
-    'info@edukom.ng',
-    'mary@edukom.ng',
-    'marykobahkoate@edukom.ng',
-    'support@edukom.ng'
-]
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend' if DEBUG else 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = _get_bool('EMAIL_USE_TLS', True)
+EMAIL_USE_SSL = _get_bool('EMAIL_USE_SSL', False)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_TIMEOUT = 10
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'support@edukom.ng')
+OFFICIAL_NOTIFICATION_EMAILS = [e.strip() for e in os.environ.get('OFFICIAL_NOTIFICATION_EMAILS', 'info@edukom.ng').split(',') if e.strip()]

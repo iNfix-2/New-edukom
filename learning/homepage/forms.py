@@ -31,7 +31,7 @@ class AboutChildForm(forms.ModelForm):
             self.fields['child_class'].empty_label = "Select Child's Class / Grade Level"
         if 'goal' in self.fields:
             self.fields['goal'].empty_label = "Select Primary Learning Goal"
-                                          
+
 class LocationForm(forms.ModelForm):
     class Meta:
         model = models.Location
@@ -43,10 +43,12 @@ class LocationForm(forms.ModelForm):
             self.fields['state'].empty_label = "Select State / Province"
 
 class LessonForm(forms.ModelForm):
+    weeks = forms.IntegerField(min_value=1, max_value=52)
+    hour_per_day = forms.IntegerField(min_value=1, max_value=24)
     days =forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=models.days)
     class Meta:
         model = models.Lesson
-        fields = ('days','start','weeks','hour_per_day','start_time') 
+        fields = ('days','start','weeks','hour_per_day','start_time')
         widgets = {
             'start':forms.DateInput(attrs={'type':'date'}),
             'start_time':forms.TimeInput(attrs={'type':'time'}),

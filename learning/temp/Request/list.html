@@ -4,31 +4,7 @@
 {% block title %}Request Center Overview | Edukom Admin Portal{% endblock %}
 
 {% block main %}
-<style>
-    .tab-active {
-        border-bottom: 3px solid #A9D156;
-        color: #002769;
-        font-weight: 700;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #c4c6d2;
-        border-radius: 10px;
-    }
-    .metric-card {
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
-    }
-    .metric-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 28px -6px rgba(0, 39, 105, 0.12);
-    }
-</style>
+<link rel="stylesheet" href="{% static 'pages/Request-list-1.css' %}">
 
 <section class="py-6 sm:py-10 md:py-12 bg-canvas-gray min-h-[85vh]">
     <div class="max-w-container-max mx-auto px-4 sm:px-6">

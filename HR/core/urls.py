@@ -10,6 +10,9 @@ urlpatterns = [
     path('robots.txt', views.robots_txt, name='robots_txt'),
     path('sitemap.xml', views.sitemap_xml, name='sitemap_xml'),
 
+    path('Get_a_tutor', views.learning_path_redirect, name='legacy_get_tutor'),
+    path('Get_a_tutor/', views.learning_path_redirect),
+    path('BecomeATutor/', views.learning_path_redirect),
     # Redirect learning routes (from email links or legacy bookmarks) directly to learning platform
     path('account/', views.learning_path_redirect, {'prefix': 'account'}, name='account_redirect_root'),
     path('account/<path:subpath>', views.learning_path_redirect, {'prefix': 'account'}, name='account_redirect'),

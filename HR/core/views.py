@@ -5,6 +5,11 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.html import format_html
+from django.contrib import messages
+from .forms import ContactForm
+import logging
+logger = logging.getLogger(__name__)
 
 # Configurable Learning platform URL
 LEARNING_PLATFORM_URL = getattr(settings, 'LEARNING_PLATFORM_URL', 'https://learning.edukom.ng/')
@@ -44,23 +49,17 @@ def contact(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         return redirect('home')
 
-    form = ContactForm(request.POST) if 'ContactForm' in globals() else None
-    
-    name = request.POST.get('name', '').strip()
-    email = request.POST.get('email', '').strip()
-    subject = request.POST.get('subject', '').strip() or 'New Contact Form Submission'
-    message = request.POST.get('message', '').strip()
-    honeypot = request.POST.get('website', '')
-
-    if honeypot or not name or not email or not message:
-        query = urlencode({'sent': 1 if honeypot else 0})
-        return HttpResponseRedirect(f"{reverse('home')}?{query}#contact")
-
-    body_html = (
-        f"<p><strong>Name:</strong> {name}</p>"
-        f"<p><strong>Email:</strong> {email}</p>"
-        f"<p><strong>Message:</strong><br>{message}</p>"
-    )
+    form = ContactForm(request.POST)
+    if request.POST.get('website'):
+        return HttpResponseRedirect(f"{reverse('home')}?sent=1#contact")
+    if not form.is_valid():
+        messages.error(request, 'Please provide a valid name, email address and message (up to 5,000 characters).')
+        return HttpResponseRedirect(f"{reverse('home')}?sent=0#contact")
+    name = form.cleaned_data['name']
+    email = form.cleaned_data['email']
+    subject = form.cleaned_data['subject'] or 'New Contact Form Submission'
+    message = form.cleaned_data['message']
+    body_html = format_html('<p><strong>Name:</strong> {}</p><p><strong>Email:</strong> {}</p><p><strong>Message:</strong></p><p>{}</p>', name, email, message)
     body_text = f"Name: {name}\nEmail: {email}\nMessage:\n{message}"
 
     try:
@@ -72,8 +71,11 @@ def contact(request: HttpRequest) -> HttpResponse:
             html_message=body_html,
             fail_silently=False,
         )
+        messages.success(request, 'Your message has been sent. Our team will be in touch.')
         query = urlencode({'sent': 1})
     except Exception:
+        logger.exception('Contact email failed')
+        messages.error(request, 'We could not send your message. Please try again or contact us by phone.')
         query = urlencode({'sent': 0})
 
     return HttpResponseRedirect(f"{reverse('home')}?{query}#contact")

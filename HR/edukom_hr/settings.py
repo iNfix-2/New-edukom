@@ -25,17 +25,24 @@ def _load_dotenv(path: Path):
 
 _load_dotenv(BASE_DIR / '.env')
 
-def _get_bool(name: str, default: bool = False) -> bool:
-    val = os.environ.get(name)
-    if val is None:
-        return default
-    return str(val).strip().lower() in {'1', 'true', 'yes', 'y', 'on'}
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-edukom-hr-production-fallback-key-2026')
+def _get_bool(name, default=False):
+    return os.environ.get(name, str(default)).lower() in {'1', 'true', 'yes', 'on'}
 
-DEBUG = _get_bool('DJANGO_DEBUG', True)
-
-ALLOWED_HOSTS = ['*']
+DEBUG = _get_bool('DJANGO_DEBUG', False)
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
+if not SECRET_KEY:
+    if not DEBUG:
+        from django.core.exceptions import ImproperlyConfigured
+        raise ImproperlyConfigured('Set DJANGO_SECRET_KEY before starting in production.')
+    from django.core.management.utils import get_random_secret_key
+    SECRET_KEY = get_random_secret_key()
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get(
+    'DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,[::1]' if DEBUG else ''
+).split(',') if h.strip()]
+if not DEBUG and (not ALLOWED_HOSTS or '*' in ALLOWED_HOSTS):
+    from django.core.exceptions import ImproperlyConfigured
+    raise ImproperlyConfigured('Set explicit DJANGO_ALLOWED_HOSTS for production.')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -46,7 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'blog',
-] 
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -162,8 +169,8 @@ LEARNING_PLATFORM_URL = os.environ.get('LEARNING_PLATFORM_URL', 'https://learnin
 
 # HSTS (recommended for production)
 SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_SECURE_HSTS_SECONDS', '0' if DEBUG else '31536000'))
-SECURE_HSTS_INCLUDE_SUBDOMAINS = _get_bool('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', not DEBUG)
-SECURE_HSTS_PRELOAD = _get_bool('DJANGO_SECURE_HSTS_PRELOAD', not DEBUG)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = _get_bool('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', False)
+SECURE_HSTS_PRELOAD = _get_bool('DJANGO_SECURE_HSTS_PRELOAD', False)
 
 # Optional AWS S3 storage (for media and/or static)
 USE_S3 = _get_bool('USE_S3', False)
@@ -184,12 +191,13 @@ if USE_S3:
         USE_S3_FOR_MEDIA = _get_bool('USE_S3_FOR_MEDIA', True)
 
         if USE_S3_FOR_MEDIA:
-            DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+            STORAGES = {'default': {'BACKEND': 'storages.backends.s3.S3Storage'}, 'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'}}
             MEDIA_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/"
 
         if USE_S3_FOR_STATIC:
-            STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+            STORAGES = globals().get('STORAGES', {'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'}})
+            STORAGES['staticfiles'] = {'BACKEND': 'storages.backends.s3.S3Storage', 'OPTIONS': {'location': 'static'}}
             STATIC_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static/"
-    except Exception:
-        # If django-storages not installed, continue with local storage
-        pass
+    except ImportError as exc:
+        from django.core.exceptions import ImproperlyConfigured
+        raise ImproperlyConfigured("Install S3 dependencies when USE_S3=true") from exc

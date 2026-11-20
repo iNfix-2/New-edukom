@@ -1,14 +1,4 @@
-# Core framework
-Django>=4.2
-
-# Image uploads for ImageField
-Pillow>=10.0
-
-# Optional: AWS S3 storage for media/static via django-storages
-django-storages[boto3]>=1.14
-boto3>=1.28
-
-# Optional database drivers (uncomment as needed)
-# psycopg2-binary>=2.9   # PostgreSQL
-# mysqlclient>=2.2       # MySQL/MariaDB
-
+Django==5.2.19
+Pillow==10.4.0
+bleach==6.2.0
+django-storages[boto3]==1.14.6

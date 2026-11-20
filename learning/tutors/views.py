@@ -3,8 +3,10 @@ from . import forms
 from . import models
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from django.utils.html import strip_tags
-from edukom import settings
+from django.conf import settings
+from django.db import transaction
+from django.shortcuts import get_object_or_404
+from homepage.notifications import send_application_emails
 
 
 def community(request):
@@ -12,30 +14,13 @@ def community(request):
 
 
 def succes_form(request, uid):
-    tutor = models.Tutor.objects.get(uid=uid)
-    tutor.full_name = f"{tutor.last_name} {tutor.first_name}"
-    subject = 'Welcome to Edukom'
-    html_message = render_to_string('emails/tutorsucess.html', {'tutor': tutor})
-    from_email = settings.EMAIL_HOST_USER
-    recipient_list = [tutor.email]
-    message = EmailMessage(subject, html_message, from_email, recipient_list)
-    message.content_subtype = 'html'
-
-    admin_html_message = render_to_string('emails/tutortoadmin.html', {'tutor': tutor})
-    admin_from_email = settings.EMAIL_HOST_USER
-    admin_recipient_list = settings.OFFICIAL_NOTIFICATION_EMAILS
-    admin_message = EmailMessage(subject, admin_html_message, admin_from_email, admin_recipient_list)
-    admin_message.content_subtype = 'html'
-    
-    mail = models.TutorEmail.objects.filter(tutor = tutor, sent = True)
-    if mail:
-        tutor.status = "Message has already been sent."
-    else:
-        tutor.status = "Message Sent."
-        message.send(fail_silently=True)
-        models.TutorEmail.objects.create(tutor = tutor, sent = True)
-        admin_message.send(fail_silently=True)
-    return render(request, 'Forms/tutor_success.html', {'tutor':tutor})
+    # A success receipt belongs to the browser that submitted the application.
+    if str(uid) not in request.session.get('tutor_receipts', []):
+        from django.http import Http404
+        raise Http404
+    tutor = get_object_or_404(models.Tutor, uid=uid)
+    tutor.full_name = f"{tutor.first_name} {tutor.last_name}"
+    return render(request, 'Forms/tutor_success.html', {'tutor': tutor})
 
 
 def become_a_tutor(request):
@@ -45,18 +30,16 @@ def become_a_tutor(request):
         Loform = forms.LocationForm(request.POST)
         Leform = forms.LessonForm(request.POST)
         if Guform.is_valid() & Abform.is_valid() & Loform.is_valid() & Leform.is_valid():
-            Guf = Guform.save(commit=False)
-            Guf_data = Guform.save()
-            Abf = Abform.save(commit=False)
-            Abf.tutor = Guf_data
-            Abf_data = Abform.save()
-            Lof = Loform.save(commit=False)
-            Lof.tutor = Guf_data
-            Lof_data = Loform.save()
-            Lef = Leform.save(commit=False)
-            Lef.tutor = Guf_data
-            Lef_data = Leform.save()
-            return redirect('tutor_succes_form', uid= Guf_data.uid )
+            with transaction.atomic():
+                applicant = Guform.save()
+                for form in (Abform, Loform, Leform):
+                    record = form.save(commit=False)
+                    record.tutor = applicant
+                    record.save()
+            receipts = request.session.get('tutor_receipts', [])
+            request.session['tutor_receipts'] = (receipts + [str(applicant.uid)])[-20:]
+            send_application_emails(applicant, 'tutor')
+            return redirect('tutor_succes_form', uid=applicant.uid)
     else:
         Guform = forms.TutorForm()
         Abform = forms.AboutTutorForm()
@@ -64,9 +47,9 @@ def become_a_tutor(request):
         Leform = forms.LessonForm()
 
     form_context = {
-        'Guform':Guform,  
-        'Abform':Abform,  
-        'Loform':Loform,  
-        'Leform':Leform,  
+        'Guform':Guform,
+        'Abform':Abform,
+        'Loform':Loform,
+        'Leform':Leform,
     }
     return render(request, 'Forms/becomeatutor.html', form_context)

@@ -2,19 +2,7 @@
 {% load static %}
 {% block main %}
 
-<style>
-  .faq-accordion[open] .accordion-icon {
-    transform: rotate(180deg);
-  }
-  .faq-accordion summary::-webkit-details-marker {
-    display: none;
-  }
-  .tab-active {
-    color: #002769 !important;
-    border-bottom: 3px solid #A9D156 !important;
-    font-weight: 700 !important;
-  }
-</style>
+<link rel="stylesheet" href="{% static 'pages/faq-1.css' %}">
 
 <!-- Hero Section -->
 <section class="relative py-16 sm:py-24 bg-deep-navy overflow-hidden">

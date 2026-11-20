@@ -1,0 +1,11 @@
+.faq-accordion[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  .faq-accordion summary::-webkit-details-marker {
+    display: none;
+  }
+  .tab-active {
+    color: #002769 !important;
+    border-bottom: 3px solid #A9D156 !important;
+    font-weight: 700 !important;
+  }
