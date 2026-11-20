@@ -8,7 +8,7 @@ from django.db.models import Q
 
 
 def post_list(request, category_slug=None, tag_slug=None):
-    posts_qs = Post.objects.filter(published=True)
+    posts_qs = Post.objects.filter(published=True).select_related("category").prefetch_related("tags")
     current_category = None
     current_tag = None
 
@@ -32,21 +32,20 @@ def post_list(request, category_slug=None, tag_slug=None):
     else:
         posts_qs = posts_qs.order_by('-created_at')
 
-    # Calculate reading time for posts
-    READING_WPM = 200
-    for post in posts_qs:
-        words = len(post.content.split())
-        post.reading_time = max(1, round(words / READING_WPM))
-
     featured = None
-    if not category_slug and not tag_slug and not q and request.GET.get('page', '1') == '1':
+    if not category_slug and not tag_slug and not q:
         featured = posts_qs.first()
         if featured:
             posts_qs = posts_qs.exclude(pk=featured.pk)
+            if request.GET.get("page", "1") != "1":
+                featured = None
 
     paginator = Paginator(posts_qs, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    for post in list(page_obj.object_list) + ([featured] if featured else []):
+        post.reading_time = max(1, round(len(post.content.split()) / 200))
 
     context = {
         'featured': featured,
@@ -78,7 +77,7 @@ def post_create(request):
             post.author = request.user.get_full_name() or request.user.username
             post.save()
             form.save_m2m()
-            return redirect(post.get_absolute_url())
+            return redirect(post.get_absolute_url()) if post.published else redirect('blog_manage')
     else:
         form = PostForm()
     return render(request, 'blog/post_form.html', {'form': form})
@@ -171,7 +170,7 @@ def post_edit(request, slug):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save()
-            return redirect(post.get_absolute_url())
+            return redirect(post.get_absolute_url()) if post.published else redirect('blog_manage')
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_form.html', {'form': form, 'post': post})

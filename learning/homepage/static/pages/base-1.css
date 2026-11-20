@@ -1,0 +1,119 @@
+p {
+      text-align: left;
+    }
+    .text-center, .text-center p, p.text-center {
+      text-align: center !important;
+    }
+    .text-left, .text-left p, p.text-left {
+      text-align: left !important;
+    }
+    .text-right, .text-right p, p.text-right {
+      text-align: right !important;
+    }
+    h1, h2, h3, h4, h5, h6, .font-headline-lg, .font-headline-md, .font-display-lg {
+      font-family: 'Montserrat', sans-serif !important;
+    }
+    .font-ribeye {
+      font-family: 'Ribeye Marrow', cursive !important;
+    }
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .vibrant-shadow {
+      box-shadow: 0 4px 20px rgba(0, 39, 105, 0.06);
+    }
+    .bento-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .bento-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 39, 105, 0.12);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Legacy Search List styling over modern UI */
+    #navfaqList li {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e2e2e2;
+      background: #ffffff;
+    }
+    #navfaqList li a {
+      color: #002769;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #navfaqList li p {
+      display: none;
+      padding-top: 8px;
+      color: #444650;
+      font-size: 14px;
+    }
+
+    /* Webflow Scroll Reveal & Micro-Interactions */
+    .reveal-fade-up, .reveal-fade-down, .reveal-fade-left, .reveal-fade-right, .reveal-scale, .scroll-trigger {
+      opacity: 0;
+      will-change: transform, opacity;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-fade-up { transform: translateY(35px); }
+    .reveal-fade-down { transform: translateY(-35px); }
+    .reveal-fade-left { transform: translateX(35px); }
+    .reveal-fade-right { transform: translateX(-35px); }
+    .reveal-scale { transform: scale(0.93); }
+
+    .reveal-fade-up.active, .reveal-fade-down.active, .reveal-fade-left.active, .reveal-fade-right.active, .reveal-scale.active, .scroll-trigger.active {
+      opacity: 1;
+      transform: translateY(0) translateX(0) scale(1);
+    }
+
+    .delay-100 { transition-delay: 100ms; }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-300 { transition-delay: 300ms; }
+    .delay-400 { transition-delay: 400ms; }
+    .delay-500 { transition-delay: 500ms; }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(1.5deg); }
+    }
+    .splatter-animated {
+      animation: floatSlow 7s ease-in-out infinite;
+    }
+
+    .hover-lift {
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+    }
+    .hover-lift:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 16px 36px -8px rgba(0, 39, 105, 0.15);
+    }
+
+    .hover-glow {
+      transition: all 0.3s ease;
+    }
+    .hover-glow:hover {
+      box-shadow: 0 0 25px rgba(169, 209, 86, 0.55);
+      transform: translateY(-2px);
+    }
+
+    .ripple-effect {
+      position: relative;
+      overflow: hidden;
+    }
+    .ripple-effect .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(0);
+      animation: rippleAnim 0.6s linear;
+      pointer-events: none;
+    }
+    @keyframes rippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }

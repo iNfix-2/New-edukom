@@ -1,22 +1,19 @@
+"""Explicit SMTP check: python test_smtp.py (never runs on import)."""
+import os
 import smtplib
 
-print("--- TESTING TLS ON PORT 587 ---")
-try:
-    server = smtplib.SMTP('mail.edukom.ng', 587)
-    server.ehlo()
-    server.starttls()
-    server.ehlo()
-    server.login('support@edukom.ng', 'Johnokojere12395')
-    print('TLS SUCCESS')
-    server.quit()
-except Exception as e:
-    print('TLS FAILED:', e)
 
-print("\n--- TESTING SSL ON PORT 465 ---")
-try:
-    server_ssl = smtplib.SMTP_SSL('mail.edukom.ng', 465)
-    server_ssl.login('support@edukom.ng', 'Johnokojere12395')
-    print('SSL SUCCESS')
-    server_ssl.quit()
-except Exception as e:
-    print('SSL FAILED:', e)
+def main():
+    host = os.environ['EMAIL_HOST']
+    port = int(os.environ.get('EMAIL_PORT', '587'))
+    use_ssl = os.environ.get('EMAIL_USE_SSL', '').lower() == 'true'
+    smtp = smtplib.SMTP_SSL if use_ssl else smtplib.SMTP
+    with smtp(host, port, timeout=10) as server:
+        if not use_ssl and os.environ.get('EMAIL_USE_TLS', 'true').lower() == 'true':
+            server.starttls()
+        server.login(os.environ['EMAIL_HOST_USER'], os.environ['EMAIL_HOST_PASSWORD'])
+    print('SMTP authentication succeeded.')
+
+
+if __name__ == '__main__':
+    main()

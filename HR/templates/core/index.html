@@ -10,7 +10,7 @@
 
 {% block navbar_brand %}
 <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
-  <img src="{% static 'img/logo.png' %}" alt="Edukom HR Logo" height="52">
+  <span class="brand-wordmark">Edukom<span class="brand-dot">.</span></span>
 </a>
 {% endblock %}
 
@@ -42,7 +42,7 @@
 
 {% block footer_brand %}
 <div class="d-flex align-items-center gap-2 mb-3">
-  <img src="{% static 'img/logo.png' %}" alt="Edukom HR Logo" height="58" class="bg-white p-2 rounded-3 shadow-sm">
+  <span class="brand-wordmark">Edukom<span class="brand-dot">.</span></span>
 </div>
 {% endblock %}
 
@@ -94,7 +94,7 @@
       <div class="col-lg-5 text-center" data-aos="fade-left">
         <div class="hero-image-showcase position-relative d-inline-block">
           <div class="hero-group-frame shadow-lg">
-            <img src="{% static 'img/corporate_group.jpg' %}" alt="Edukom HR Corporate Team" class="hero-group-img">
+            <span class="editorial-panel">Corporate Team</span>
           </div>
           <!-- Decorative badges / floating accents -->
           <div class="hero-floating-badge badge-top-right">
@@ -144,7 +144,7 @@
       </div>
       <div class="col-lg-6 text-center" data-aos="fade-left">
         <div class="position-relative d-inline-block">
-          <img src="{% static 'img/recruitement1.png' %}" alt="Recruitment Services" class="blob-frame-img">
+          <span class="editorial-panel">Recruitment Services</span>
           <i class="bi bi-plus-lg doodle-shape text-warning fs-3" style="top:-20px; right:10px;"></i>
         </div>
       </div>
@@ -168,7 +168,7 @@
       </div>
       <div class="col-lg-6 text-center" data-aos="fade-right">
         <div class="position-relative d-inline-block">
-          <img src="{% static 'img/training2.jpg' %}" alt="Training Services" class="blob-frame-img blob-frame-img-alt">
+          <span class="editorial-panel">Training Services</span>
           <i class="bi bi-circle-fill doodle-shape text-info fs-5" style="bottom:-10px; left:-10px;"></i>
         </div>
       </div>
@@ -192,7 +192,7 @@
       </div>
       <div class="col-lg-6 text-center" data-aos="fade-left">
         <div class="position-relative d-inline-block">
-          <img src="{% static 'img/stragtegy.jpg' %}" alt="Strategy Services" class="blob-frame-img">
+          <span class="editorial-panel">Strategy Services</span>
           <i class="bi bi-triangle-fill doodle-shape text-danger fs-5" style="top:10px; left:-15px;"></i>
         </div>
       </div>
@@ -216,7 +216,7 @@
       </div>
       <div class="col-lg-6 text-center" data-aos="fade-right">
         <div class="position-relative d-inline-block">
-          <img src="{% static 'img/performance2.png' %}" alt="Performance Management" class="blob-frame-img blob-frame-img-alt">
+          <span class="editorial-panel">Performance Management</span>
           <i class="bi bi-stars doodle-shape text-warning fs-3" style="bottom:-10px; right:-10px;"></i>
         </div>
       </div>
@@ -230,15 +230,10 @@
     <div class="newsletter-card text-center" data-aos="fade-up">
       <h3 class="display-6 fw-bold font-display mb-2">Want to Know More?</h3>
       <p class="text-muted mb-4 mx-auto" style="max-width: 540px;">
-        Subscribe to receive our exclusive HR Strategy Playbook and stay updated with workforce best practices in Nigeria.
+        Ask our team about the HR Strategy Playbook and resources for your organization.
       </p>
 
-      <form action="#contact" method="get" class="newsletter-input-group d-flex align-items-center">
-        <input type="email" class="form-control" placeholder="Enter your email address..." required>
-        <button type="submit" class="btn btn-brand-pill px-4 flex-shrink-0">
-          Get Playbook <i class="bi bi-send-fill ms-1"></i>
-        </button>
-      </form>
+      <a href="#contact" class="btn btn-brand-pill px-4">Request the HR playbook <i class="bi bi-arrow-right ms-2"></i></a>
     </div>
   </div>
 </section>
@@ -247,8 +242,8 @@
 <section class="py-5">
   <div class="container">
     <div class="superstar-card text-center" data-aos="zoom-in">
-      <img src="{% static 'img/hero_avatar1.png' %}" alt="Superstar" class="superstar-avatar-top d-none d-md-block">
-      <img src="{% static 'img/hero_avatar2.png' %}" alt="Superstar 2" class="superstar-avatar-bottom d-none d-md-block">
+      <span class="editorial-panel">Superstar</span>
+      <span class="editorial-panel">Superstar 2</span>
 
       <h2 class="display-5 fw-bold mb-3 text-white font-display">Are You Ready to Build High-Performing Teams?</h2>
       <p class="lead text-white-50 mx-auto mb-4" style="max-width: 650px;">
@@ -289,7 +284,7 @@
       <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
         <a href="#contact" class="catalog-card h-100 text-decoration-none d-flex flex-column">
           <div class="catalog-thumb-wrap mb-3 overflow-hidden rounded-4 shadow-sm bg-light">
-            <img src="{% static 'img/catalog_recruitment.png' %}" alt="Recruitment Toolkit" class="img-fluid catalog-thumb-img">
+            <span class="editorial-panel">Recruitment Toolkit</span>
           </div>
           <h5 class="fw-bold font-display text-dark mb-3">Recruitment & Sourcing SOPs</h5>
           <div class="d-flex align-items-center justify-content-between mt-auto pt-3 border-top">
@@ -303,7 +298,7 @@
       <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
         <a href="#contact" class="catalog-card h-100 text-decoration-none d-flex flex-column">
           <div class="catalog-thumb-wrap mb-3 overflow-hidden rounded-4 shadow-sm bg-light">
-            <img src="{% static 'img/catalog_onboarding.png' %}" alt="Onboarding Guidebook" class="img-fluid catalog-thumb-img">
+            <span class="editorial-panel">Onboarding Guidebook</span>
           </div>
           <h5 class="fw-bold font-display text-dark mb-3">Employee Onboarding Framework</h5>
           <div class="d-flex align-items-center justify-content-between mt-auto pt-3 border-top">
@@ -317,7 +312,7 @@
       <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
         <a href="#contact" class="catalog-card h-100 text-decoration-none d-flex flex-column">
           <div class="catalog-thumb-wrap mb-3 overflow-hidden rounded-4 shadow-sm bg-light">
-            <img src="{% static 'img/catalog_kpi.png' %}" alt="KPI Appraisal Manual" class="img-fluid catalog-thumb-img">
+            <span class="editorial-panel">KPI Appraisal Manual</span>
           </div>
           <h5 class="fw-bold font-display text-dark mb-3">KPI Appraisal & Performance Manual</h5>
           <div class="d-flex align-items-center justify-content-between mt-auto pt-3 border-top">
@@ -331,7 +326,7 @@
       <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
         <a href="#contact" class="catalog-card h-100 text-decoration-none d-flex flex-column">
           <div class="catalog-thumb-wrap mb-3 overflow-hidden rounded-4 shadow-sm bg-light">
-            <img src="{% static 'img/catalog_strategy.png' %}" alt="Organizational Structuring & HR Audits" class="img-fluid catalog-thumb-img">
+            <span class="editorial-panel">Organizational Structuring & HR Audits</span>
           </div>
           <h5 class="fw-bold font-display text-dark mb-3">Organizational Structuring & HR Audits</h5>
           <div class="d-flex align-items-center justify-content-between mt-auto pt-3 border-top">
@@ -365,7 +360,7 @@
     <div class="bg-white rounded-5 p-4 p-md-5 shadow-sm border border-light mb-5" data-aos="fade-up">
       <div class="row align-items-center gy-4">
         <div class="col-lg-4 text-center">
-          <img src="{% static 'img/opekomolafe2.jpg' %}" alt="Ope Komolafe" class="img-fluid rounded-4 shadow-sm" style="max-height: 380px; width:100%; object-fit:cover;">
+          <span class="person-wordmark" aria-label="Ope Komolafe">OK</span>
         </div>
         <div class="col-lg-8">
           <h3 class="fw-bold font-display mb-1" style="color: var(--primary-color);">Ope Komolafe</h3>
@@ -403,7 +398,7 @@
     <div class="row g-4" id="faculty">
       <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
         <div class="bg-white p-4 rounded-4 text-center h-100 border border-light shadow-sm">
-          <img src="{% static 'img/SegunLawal-DoXji1tV.jpg' %}" alt="Segun Lawal" class="rounded-circle mb-3 shadow-sm" style="width:110px; height:110px; object-fit:cover;">
+          <span class="person-wordmark" aria-label="Segun Lawal">SL</span>
           <h5 class="fw-bold mb-1">Segun Lawal</h5>
           <p class="text-muted small mb-1">Consultant & Principal Partner</p>
           <small class="text-secondary">Wisdom Scroll Consulting</small>
@@ -412,7 +407,7 @@
 
       <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
         <div class="bg-white p-4 rounded-4 text-center h-100 border border-light shadow-sm">
-          <img src="{% static 'img/tokunboFasoro-DODu3Tnt.jpg' %}" alt="Tokunbo Fasoro" class="rounded-circle mb-3 shadow-sm" style="width:110px; height:110px; object-fit:cover;">
+          <span class="person-wordmark" aria-label="Tokunbo Fasoro">TF</span>
           <h5 class="fw-bold mb-1">Tokunbo Fasoro</h5>
           <p class="text-muted small mb-1">Managing Consultant – Elevate by TF</p>
           <small class="text-secondary">Creative Director – Lioness by TF</small>
@@ -421,7 +416,7 @@
 
       <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
         <div class="bg-white p-4 rounded-4 text-center h-100 border border-light shadow-sm">
-          <img src="{% static 'img/opekomolafe2.jpg' %}" alt="Ope Komolafe" class="rounded-circle mb-3 shadow-sm" style="width:110px; height:110px; object-fit:cover;">
+          <span class="person-wordmark" aria-label="Ope Komolafe">OK</span>
           <h5 class="fw-bold mb-1">Ope Komolafe</h5>
           <p class="text-muted small mb-1">Founder & Executive Director</p>
           <small class="text-secondary">Edukom Group</small>
@@ -443,31 +438,31 @@
     <div class="row justify-content-center align-items-center g-4">
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up">
         <div class="d-flex flex-column align-items-center justify-content-center p-2" style="height: 130px;">
-          <img src="{% static 'img/shrm-main.svg' %}" alt="SHRM" class="img-fluid mb-2" style="max-height: 85px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">SHRM</span>
           <h6 class="small fw-bold mb-0 text-dark">SHRM</h6>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="100">
         <div class="d-flex flex-column align-items-center justify-content-center p-2" style="height: 130px;">
-          <img src="{% static 'img/nitad-logo.png' %}" alt="NITAD" class="img-fluid mb-2" style="max-height: 85px; max-width: 100%; object-fit: contain;">
+          <span class="brand-wordmark">Edukom<span class="brand-dot">.</span></span>
           <h6 class="small fw-bold mb-0 text-dark">NITAD</h6>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="200">
         <div class="d-flex flex-column align-items-center justify-content-center p-2" style="height: 130px;">
-          <img src="{% static 'img/CIPMN.png' %}" alt="CIPM Nigeria" class="img-fluid mb-2" style="max-height: 85px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">CIPM Nigeria</span>
           <h6 class="small fw-bold mb-0 text-dark">CIPM Nigeria</h6>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="300">
         <div class="d-flex flex-column align-items-center justify-content-center p-2" style="height: 130px;">
-          <img src="{% static 'img/ldni.jpg' %}" alt="LDNI" class="img-fluid mb-2" style="max-height: 85px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">LDNI</span>
           <h6 class="small fw-bold mb-0 text-dark">LDNI</h6>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="400">
         <div class="d-flex flex-column align-items-center justify-content-center p-2" style="height: 130px;">
-          <img src="{% static 'img/hrci.jpg' %}" alt="HRCI" class="img-fluid mb-2" style="max-height: 85px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">HRCI</span>
           <h6 class="small fw-bold mb-0 text-dark">HRCI</h6>
         </div>
       </div>
@@ -487,52 +482,52 @@
     <div class="row justify-content-center align-items-center g-4">
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up">
         <div class="d-flex align-items-center justify-content-center p-2" style="height: 120px;">
-          <img src="{% static 'img/clients/cbn.png' %}" alt="Central Bank of Nigeria (CBN)" class="img-fluid" style="max-height: 100px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">Central Bank of Nigeria (CBN)</span>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="100">
         <div class="d-flex align-items-center justify-content-center p-2" style="height: 120px;">
-          <img src="{% static 'img/clients/presidential_fleet.png' %}" alt="Presidential Air Fleet" class="img-fluid" style="max-height: 100px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">Presidential Air Fleet</span>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="150">
         <div class="d-flex align-items-center justify-content-center p-2" style="height: 120px;">
-          <img src="{% static 'img/clients/ferma.png' %}" alt="FERMA" class="img-fluid" style="max-height: 100px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">FERMA</span>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="200">
         <div class="d-flex align-items-center justify-content-center p-2" style="height: 120px;">
-          <img src="{% static 'img/clients/waifem.png' %}" alt="WAIFEM" class="img-fluid" style="max-height: 100px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">WAIFEM</span>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="250">
         <div class="d-flex align-items-center justify-content-center p-2" style="height: 120px;">
-          <img src="{% static 'img/clients/sahad_hospitals.png' %}" alt="Sahad Hospitals" class="img-fluid" style="max-height: 100px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">Sahad Hospitals</span>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="300">
         <div class="d-flex align-items-center justify-content-center p-2" style="height: 120px;">
-          <img src="{% static 'img/clients/nethawk.png' %}" alt="Nethawk Solutions" class="img-fluid" style="max-height: 100px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">Nethawk Solutions</span>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="350">
         <div class="d-flex align-items-center justify-content-center p-2" style="height: 120px;">
-          <img src="{% static 'img/clients/bi_solutions.png' %}" alt="BI Solutions" class="img-fluid" style="max-height: 100px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">BI Solutions</span>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="400">
         <div class="d-flex align-items-center justify-content-center p-2" style="height: 120px;">
-          <img src="{% static 'img/clients/steron.png' %}" alt="STERON" class="img-fluid" style="max-height: 100px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">STERON</span>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="450">
         <div class="d-flex align-items-center justify-content-center p-2" style="height: 120px;">
-          <img src="{% static 'img/clients/mrt_net_solutions.png' %}" alt="MRT Net Solutions" class="img-fluid" style="max-height: 100px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">MRT Net Solutions</span>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="fade-up" data-aos-delay="500">
         <div class="d-flex align-items-center justify-content-center p-2" style="height: 120px;">
-          <img src="{% static 'img/clients/wisdom_scroll.png' %}" alt="Wisdom Scroll Consulting" class="img-fluid" style="max-height: 100px; max-width: 100%; object-fit: contain;">
+          <span class="partner-wordmark">Wisdom Scroll Consulting</span>
         </div>
       </div>
     </div>
@@ -594,20 +589,20 @@
 
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label small fw-semibold">Your Name *</label>
-              <input type="text" name="name" class="form-control py-2 rounded-3" placeholder="John Doe" required>
+              <label class="form-label small fw-semibold" for="contact-name">Your Name *</label>
+              <input type="text" id="contact-name" name="name" class="form-control py-2 rounded-3" placeholder="John Doe" required>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-semibold">Your Email *</label>
-              <input type="email" name="email" class="form-control py-2 rounded-3" placeholder="john@company.com" required>
+              <label class="form-label small fw-semibold" for="contact-email">Your Email *</label>
+              <input type="email" id="contact-email" name="email" class="form-control py-2 rounded-3" placeholder="john@company.com" required>
             </div>
             <div class="col-12">
-              <label class="form-label small fw-semibold">Subject</label>
-              <input type="text" name="subject" class="form-control py-2 rounded-3" placeholder="Inquiry about Recruitment / Training">
+              <label class="form-label small fw-semibold" for="contact-subject">Subject</label>
+              <input type="text" id="contact-subject" name="subject" class="form-control py-2 rounded-3" placeholder="Inquiry about Recruitment / Training">
             </div>
             <div class="col-12">
-              <label class="form-label small fw-semibold">Message *</label>
-              <textarea name="message" class="form-control py-2 rounded-3" rows="5" placeholder="Tell us about your organization's HR requirements..." required></textarea>
+              <label class="form-label small fw-semibold" for="contact-message">Message *</label>
+              <textarea id="contact-message" name="message" class="form-control py-2 rounded-3" rows="5" placeholder="Tell us about your organization's HR requirements..." required></textarea>
             </div>
             <div class="col-12 mt-4">
               <button type="submit" class="btn btn-plum-pill w-100 py-3 fs-6">

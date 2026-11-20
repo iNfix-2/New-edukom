@@ -1,0 +1,122 @@
+/* Form Step Navigation Styling */
+  .step-tab {
+    transition: all 0.3s ease;
+  }
+  .step-tab.active-step {
+    background-color: #002769 !important;
+    color: #ffffff !important;
+    border-color: #002769 !important;
+  }
+  .step-tab.active-step .step-number {
+    background-color: #A9D156 !important;
+    color: #002769 !important;
+  }
+  .step-tab.completed-step {
+    background-color: #f3f3f3;
+    color: #002769;
+  }
+  .step-tab.completed-step .step-number {
+    background-color: #002769;
+    color: #ffffff;
+  }
+
+  /* Custom form field tweaks inside Crispy forms */
+  .form-step-content input[type="text"],
+  .form-step-content input[type="email"],
+  .form-step-content input[type="tel"],
+  .form-step-content input[type="number"],
+  .form-step-content select,
+  .form-step-content textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #c4c6d2;
+    background-color: #ffffff;
+    font-size: 1rem;
+    color: #1a1c1c;
+    transition: all 0.2s ease;
+  }
+  .form-step-content input:focus,
+  .form-step-content select:focus,
+  .form-step-content textarea:focus {
+    outline: none;
+    border-color: #002769;
+    box-shadow: 0 0 0 4px rgba(169, 209, 86, 0.25);
+  }
+  .form-step-content label {
+    font-weight: 600;
+    color: #00143f;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
+  }
+  .form-step-content .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  /* Crisp Checkbox & Radio Alignment Fix */
+  .form-step-content #div_id_subject > div,
+  .form-step-content #div_id_curriculum > div,
+  .form-step-content #div_id_days > div,
+  .form-step-content #div_id_lesson_type > div,
+  .form-step-content .controls > div,
+  .form-step-content ul {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)) !important;
+    gap: 0.75rem !important;
+    padding: 0 !important;
+    margin-top: 0.5rem !important;
+    list-style: none !important;
+  }
+
+  .form-step-content .form-check,
+  .form-step-content .checkbox,
+  .form-step-content .radio,
+  .form-step-content ul li {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    background-color: #f9f9f9;
+    border: 1px solid #e2e2e2;
+    padding: 0.6rem 0.85rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin: 0 !important;
+  }
+
+  .form-step-content .form-check:hover,
+  .form-step-content .checkbox:hover,
+  .form-step-content .radio:hover,
+  .form-step-content ul li:hover {
+    border-color: #002769;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 39, 105, 0.06);
+  }
+
+  .form-step-content input[type="checkbox"],
+  .form-step-content input[type="radio"] {
+    width: 1.15rem !important;
+    height: 1.15rem !important;
+    accent-color: #002769 !important;
+    cursor: pointer !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .form-step-content .form-check-label,
+  .form-step-content #div_id_subject label:not(#id_subject),
+  .form-step-content #div_id_curriculum label:not(#id_curriculum),
+  .form-step-content #div_id_days label:not(#id_days),
+  .form-step-content #div_id_lesson_type label:not(#id_lesson_type),
+  .form-step-content ul li label {
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    color: #1a1c1c !important;
+    cursor: pointer !important;
+    user-select: none;
+    line-height: 1.2 !important;
+  }

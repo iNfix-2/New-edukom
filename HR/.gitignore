@@ -7,8 +7,6 @@ __pycache__/
 *.py.class
 
 # Django Migrations
-**/migrations/
-!**/migrations/__init__.py
 
 # Virtual Environments
 env/
@@ -40,11 +38,9 @@ db.sqlite3
 # Media & Static (Optional if generated dynamically)
 media/
 staticfiles/
-static/
 
 # Secrets & Configs
 .env
-.env.example
 .env.local
 *.bak
 *.tmp
@@ -72,3 +68,9 @@ requirements-*.txt
 # Others
 *.swp
 *.swo
+
+.env
+.env.*
+!.env.example
+*.log
+node_modules/

@@ -1,9 +1,5 @@
 {% extends "admin/base.html" %}
-
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('R2R site admin') }}{% endblock %}
-
-{% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('R2R administration') }}</a></h1>
-{% endblock %}
-
-{% block nav-global %}{% endblock %}
+{% load static %}
+{% block title %}{{ title }} | Edukom Learning{% endblock %}
+{% block branding %}<div id="site-name"><a href="{% url 'admin:index' %}">Edukom Learning Administration</a></div>{% endblock %}
+{% block extrahead %}{{ block.super }}<link rel="icon" href="{% static 'IMG/logo.png' %}">{% endblock %}

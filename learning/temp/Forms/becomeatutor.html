@@ -5,54 +5,7 @@
 {% block title %}Tutor Application | Edukom Academic Portal{% endblock %}
 
 {% block main %}
-<style>
-  /* Form Step Navigation Styling */
-  .tutor-step-tab {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .tutor-step-tab.active {
-    background-color: #002769 !important;
-    color: #ffffff !important;
-    border-color: #002769 !important;
-    box-shadow: 0 4px 14px rgba(0, 39, 105, 0.25);
-  }
-  .tutor-step-tab.active .step-num {
-    background-color: #A9D156 !important;
-    color: #002769 !important;
-  }
-  
-  /* Input Customizations for Crispy Forms */
-  .tutor-form-container input[type="text"],
-  .tutor-form-container input[type="email"],
-  .tutor-form-container input[type="tel"],
-  .tutor-form-container input[type="number"],
-  .tutor-form-container select,
-  .tutor-form-container textarea {
-    width: 100%;
-    padding: 0.85rem 1.15rem;
-    border-radius: 0.85rem;
-    border: 1px solid #e2e8f0;
-    background-color: #f8fafc;
-    font-size: 0.95rem;
-    color: #002769;
-    transition: all 0.2s ease;
-  }
-  .tutor-form-container input:focus,
-  .tutor-form-container select:focus,
-  .tutor-form-container textarea:focus {
-    outline: none;
-    border-color: #002769;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 4px rgba(169, 209, 86, 0.3);
-  }
-  .tutor-form-container label {
-    font-weight: 600;
-    color: #002769;
-    margin-bottom: 0.4rem;
-    display: block;
-    font-size: 0.9rem;
-  }
-</style>
+<link rel="stylesheet" href="{% static 'pages/Forms-becomeatutor-1.css' %}">
 
 <section class="relative py-12 md:py-20 bg-canvas-gray overflow-hidden">
     <!-- Edge Decorative Background Splatters -->

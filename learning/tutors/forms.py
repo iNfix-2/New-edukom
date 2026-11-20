@@ -17,17 +17,19 @@ class AboutTutorForm(forms.ModelForm):
     class Meta:
         model = models.AboutTutor
         fields = ('teacher_class','goal','subject','about')
-                                          
+
 class LocationForm(forms.ModelForm):
     class Meta:
         model = models.Location
         fields = ('state','street_address')
 
 class LessonForm(forms.ModelForm):
+    weeks = forms.IntegerField(min_value=1, max_value=52)
+    hour_per_day = forms.IntegerField(min_value=1, max_value=24)
     days =forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=models.days)
     class Meta:
         model = models.Lesson
-        fields = ('days','weeks','hour_per_day','start_time') 
+        fields = ('days','weeks','hour_per_day','start_time')
         widgets = {
             'start_time':forms.TimeInput(attrs={'type':'time'}),
             'hour_per_day':forms.NumberInput({'type':'number'}),

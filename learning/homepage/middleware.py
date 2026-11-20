@@ -7,17 +7,8 @@ class SiteTrafficMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # Track views for actual pages, skip static/media/admin
-        path = request.path_info
-        if not path.startswith('/admin/') and not path.startswith('/media/') and not path.startswith('/Assets/') and not path.startswith('/static/'):
-            today = timezone.now().date()
-            obj, created = SiteTraffic.objects.get_or_create(date=today)
-            if not created:
-                # Use F expression to avoid race conditions and safely increment
-                SiteTraffic.objects.filter(id=obj.id).update(views=F('views') + 1)
-            else:
-                obj.views = 1
-                obj.save(update_fields=['views'])
-                
         response = self.get_response(request)
+        if request.method == 'GET' and response.status_code == 200 and response.get('Content-Type', '').startswith('text/html') and not request.path_info.startswith(('/admin/', '/account/', '/guardian', '/dashboard/', '/Assets/', '/media/')):
+            obj, _ = SiteTraffic.objects.get_or_create(date=timezone.localdate())
+            SiteTraffic.objects.filter(pk=obj.pk).update(views=F('views') + 1)
         return response

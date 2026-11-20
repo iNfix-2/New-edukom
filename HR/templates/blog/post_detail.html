@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static blog_content %}
 
 {% block title %}{{ post.title }} — Blog — Edukom HR{% endblock %}
 {% block meta_description %}
@@ -49,7 +49,7 @@
         {% endif %}
 
         <div class="content lh-lg text-secondary fs-5" style="white-space: pre-line;">
-          {{ post.content|safe }}
+          {{ post.content|clean_content }}
         </div>
 
         {% if post.tags.all %}
